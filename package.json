@@ -1,0 +1,26 @@
+{
+  "name": "dream_team_builder",
+  "version": "1.0.0",
+  "description": "A NodeJS based application designed to build a Team in HTML",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wdfhai/dream_team_builder.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wdfhai/dream_team_builder/issues"
+  },
+  "homepage": "https://github.com/wdfhai/dream_team_builder#readme",
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "enquirer": "^2.3.6",
+    "inquirer": "^7.3.3",
+    "node-emoji": "^1.10.0"
+  }
+}

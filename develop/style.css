@@ -1,0 +1,53 @@
+html * {
+  font-family: "Comfortaa", cursive;
+  line-height: 1.5rem;
+}
+
+header {
+  background-color: crimson;
+  height: 125px;
+}
+
+h1 {
+  color: white;
+  text-align: center;
+  padding: 35px 0px 20px 0px;
+}
+
+#main {
+  align-content: center;
+}
+
+.row {
+  display: flex;
+}
+
+.card {
+  display: block;
+  margin: 20px;
+  width: 250px;
+  height: auto;
+  border-radius: 10px;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  box-shadow: none;
+  -moz-box-shadow: 5px 5px 5px #bbbbbb;
+  -webkit-box-shadow: 5px 5px 5px #bbb;
+}
+
+.card-header {
+  background-color: royalblue;
+  color: white;
+  font-size: 25px;
+}
+
+.card-body {
+  background-color: #dddada;
+  border-radius: 0px 0px 10px 10px;
+}
+
+.info {
+  background-color: rgb(233, 231, 231);
+  font-size: 12px;
+  font-weight: bold;
+}
