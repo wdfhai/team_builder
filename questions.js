@@ -14,38 +14,27 @@ const questions = [
         message: 'Q. What role do you want to assign them?',
         choices: roles,
         name: 'role',  
-    }
-];
-
-const lead_questions = [
-    {
-        type:'number',
-        message: 'Q. What is the room number assigned to them?',
-        name: 'manager_office',
     },{
-        type:'confirm',
-        message: 'Do you want to add another member to the team?',
-        name: 'add_more',
-    }
-];
-
-const dev_questions = [
-    {
+        type:'number',
+        message: 'Q. What is their Office number',
+        name: 'lead_office',
+        when: function (response){
+            return response.role === "Team Leader";
+        },
+    },{
         type:'input',
         message: 'Q. What is their GitHub username?',
-        name: 'eng_github',
+        name: 'dev_github',
+        when: function (response){
+            return response.role === "Developer";
+        },
     },{
-        type:'confirm',
-        message: 'Do you want to add another member to the team?',
-        name: 'add_more',
-    }
-];
-
-const int_questions = [
-    {
         type:'input',
-        message: 'Q3. Which school are they from?',
+        message: 'Q. Which school are they from??',
         name: 'int_school',
+        when: function (response){
+            return response.role === "Intern";
+        },
     },{
         type:'confirm',
         message: 'Do you want to add another member to the team?',
@@ -53,4 +42,6 @@ const int_questions = [
     }
 ];
 
-module.exports = questions, lead_questions, dev_questions, int_questions;
+
+
+module.exports = questions;

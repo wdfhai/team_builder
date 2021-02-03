@@ -4,27 +4,31 @@ const enquirer = require('enquirer');
 const chalk = require ('chalk');
 const emoji = require ('node-emoji');
 const questions = require ('./questions');
-// const lead_questions = require ('lead_questions');
-// const dev_questions = require ('dev_questions');
-// const int_questions = require ('int_questions');
+
+console.clear();
+
+const greeting = 
+`
+
+                        ${emoji.get('file_folder')}  ${chalk.bgMagenta('Welcome to the Dream Team Builder!')}  ${(emoji.get('file_folder'))}  
+
+        ${chalk.cyan('This application will generate a HTML file presenting your team and its members along with their roles and details.')}
+
+`;
+
 
 async function intro() {
     try {
-        const first_response = await inquirer.prompt(questions);
+        const response = await inquirer.prompt(questions);
 
-        console.log(first_response);
-
-        if (first_response.role === 'Team Leader'){
-            console.log('got the leader job');
-        } else if (first_response.role === 'Developer'){
-            console.log('got the dev job');
-        } else if (first_response.role === 'Intern'){
-            console.log('got the intership');
+        if (response.add_more){
+            intro();
         } else {
-            console.log('didnt gt a job');
-        };
+            return;
+        }
     } catch (error) {
-    console.log('Whoopsie daisy. Error detected.');
+        console.log(error);
+        console.log('Whoopsie daisy. Error detected.');
     }
 };
 
