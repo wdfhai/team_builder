@@ -5,22 +5,23 @@ const emoji = require ('node-emoji');
 const questions = require ('./questions');
 const template = require ('./template');
 
-let members = [];
-let i ;
+let employeesArray = [];
 
-class Member{
-    constructor(name, email, role, info){
+class Employee{
+    constructor(name, email, id, role, office, github, school){
         this.name = name;
         this.email = email;
+        this.id = id;
         this.role = role;
-        this.info = info;
-        this.id;
+        this.office = office;
+        this.github = github;
+        this.school = school;
         this.icon;
         return this;
     }
     assignIcon(){
         if (this.role === 'Manager'){
-            this.icon = `<i class="fas fa-mug-hot"></i>`
+            this.icon = `<span><i class="fas fa-mug-hot"></i></span>`
         } else if (this.role === 'Engineer'){
             this.icon = `<i class="fas fa-glasses"></i>`
         } else {
@@ -52,30 +53,22 @@ const goodbye =
 ${emoji.get('white_check_mark')} ${chalk.blueBright('Success! The HTML for your team was successfully written. Check it out. Cheers!')} ${emoji.get('white_check_mark')}
 `;
 
-
-
 console.clear();
 console.log(greeting);
 
-async function intro() {
+async function getEmployees() {
     try {
         const response = await inquirer.prompt(questions);
-        let member = new Member(response.name, response.email, response.role, response.info);
-        console.log(member);
-        members.push(member);
+        let e = new Employee(response.name, response.email, response.id, response.role, response.office, response.github, response.school);
+        e.assignIcon();
+        employeesArray.push(e);
 
         if (response.add_more){
-            const html = template(response);
-            console.log(html);  
-            fs.writeFileSync('./index.html', html);
-            intro();
+            getEmployees();
         } else {
-            members.forEach((member)=>{
-                member.id = parseInt(members.indexOf(member)) + 1;
-                member.assignIcon();
-                console.log(member);
-                console.log(member.id);
-            })
+            // const html = template(employeesArray);
+            // fs.writeFileSync('./index.html', html);
+            console.log('\nHere are your employees and their information\n', employeesArray)
             console.log(goodbye);
             return;
         }
@@ -86,4 +79,6 @@ async function intro() {
     }
 };
 
-intro();
+getEmployees();
+
+module.exports = employeesArray;
