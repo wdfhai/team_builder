@@ -5,6 +5,31 @@ const emoji = require ('node-emoji');
 const questions = require ('./questions');
 const template = require ('./template');
 
+let members = [];
+let i ;
+
+class Member{
+    constructor(name, email, role, info){
+        this.name = name;
+        this.email = email;
+        this.role = role;
+        this.info = info;
+        this.id;
+        this.icon;
+        return this;
+    }
+    assignIcon(){
+        if (this.role === 'Manager'){
+            this.icon = `<i class="fas fa-mug-hot"></i>`
+        } else if (this.role === 'Engineer'){
+            this.icon = `<i class="fas fa-glasses"></i>`
+        } else {
+            this.icon = `<i class="fas fa-user-graduate"></i>`
+        }
+        return this;
+    }
+}
+
 const greeting = 
 `
 
@@ -24,7 +49,7 @@ ${emoji.get('exclamation')} ${chalk.red('Looks like there was an error creating 
 const goodbye = 
 `
 
-${emoji.get('white_check_mark')} ${chalk.blueBright('Dream Team assembled. Your HTML file was successfully written. Check it out. Cheers!')} ${emoji.get('white_check_mark')}
+${emoji.get('white_check_mark')} ${chalk.blueBright('Success! The HTML for your team was successfully written. Check it out. Cheers!')} ${emoji.get('white_check_mark')}
 `;
 
 
@@ -35,12 +60,22 @@ console.log(greeting);
 async function intro() {
     try {
         const response = await inquirer.prompt(questions);
+        let member = new Member(response.name, response.email, response.role, response.info);
+        console.log(member);
+        members.push(member);
 
         if (response.add_more){
+            const html = template(response);
+            console.log(html);  
+            fs.writeFileSync('./index.html', html);
             intro();
         } else {
-            const html = template(response);   
-            fs.writeFileSync('./index.html', html);
+            members.forEach((member)=>{
+                member.id = parseInt(members.indexOf(member)) + 1;
+                member.assignIcon();
+                console.log(member);
+                console.log(member.id);
+            })
             console.log(goodbye);
             return;
         }

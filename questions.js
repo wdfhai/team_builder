@@ -1,10 +1,10 @@
-const roles = ['Team Leader', 'Developer', 'Intern'];
+const roles = ['Manager', 'Engineer', 'Intern'];
 
 const questions = [
     {
         type:'input',
         message: 'Q. What is the name of the person you want to add to the team?',
-        name: 'person_name',
+        name: 'name',
     },{
         type:'input',
         message: 'Q. What is their email address?',
@@ -17,21 +17,21 @@ const questions = [
     },{
         type:'number',
         message: 'Q. What is their Office number',
-        name: 'lead_office',
+        name: 'info',
         when: function (response){
-            return response.role === "Team Leader";
+            return response.role === "Manager";
         },
     },{
         type:'input',
         message: 'Q. What is their GitHub username?',
-        name: 'dev_github',
+        name: 'info',
         when: function (response){
-            return response.role === "Developer";
+            return response.role === "Engineer";
         },
     },{
         type:'input',
         message: 'Q. Which school are they from??',
-        name: 'int_school',
+        name: 'info',
         when: function (response){
             return response.role === "Intern";
         },
