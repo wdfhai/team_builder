@@ -1,6 +1,5 @@
-const employees = require('./index');
 
-const htmlTemplate = (employeesArray) =>
+const html = (employeesArray) =>
 `
 <!DOCTYPE html>
 <html lang="en">
@@ -35,40 +34,10 @@ const htmlTemplate = (employeesArray) =>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"
         integrity="sha512-XKa9Hemdy1Ui3KSGgJdgMyYlUg1gM+QhL6cnlyTe2qzMCYm4nAZ1PsVerQzTTXzonUR+dmswHqgJPuwCq1MaAg=="
         crossorigin="anonymous"></script>
-    <script>
-        $(document).ready(function () {
-            const employeesRow = $('#employeesRow');
-            employeesArray.forEach((e) => {
-                const card = $('<div/>').attr('class','card').attr('id','memberCard')
-                const card_header = $('<div/>').attr('class', 'card-header')
-                const name = $('<p/>').attr('id', 'name').textContent(${(e.name)});
-                const role = $('<p/>').attr('id', 'role').textContent(${(e.icon)}, ${(e.role)});
-                const card_body = $('<div/>').attr('class', 'card-body');
-                const idInfo = $('<div/>').attr('class','info');
-                const emailInfo = $('<div/>').attr('class','info');
-                const descInfo = $('<div/>').attr('class','info');
-                const id = $('<p/>').attr('id', 'id').textContent(${(e.id)});
-                const email = $('<p/>').attr('id', 'role').textContent(${(e.email)});
-                const desc = $('<p/>').attr('id', 'desc').textContent(${(e.info)});
-                idInfo.append(id);
-                emailInfo.append(email);
-                descInfo.append(desc);
-                card_header.append(name);
-                card_header.append(role);
-                card_body.append(idInfo);
-                card_body.append(emailInfo);
-                card_body.append(descInfo);
-                card.append(card_header);
-                card.append(card_body);
-                employeesRow.append(card);
-            })
-        
-        });
-    </script>
+    <script src="./develop/script.js"></script>
 </body>
 
 </html>
 `
 
-module.exports = htmlTemplate;
-
+module.exports = html;

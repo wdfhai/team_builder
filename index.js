@@ -4,32 +4,13 @@ const chalk = require ('chalk');
 const emoji = require ('node-emoji');
 const questions = require ('./questions');
 const template = require ('./template');
+const Employee = require ('./lib/Employee');
+const Manager = require ('./lib/Manager');
+const Engineer = require ('./lib/Engineer');
+const Intern = require ('./lib/Intern');
 
-let employeesArray = [];
-
-class Employee{
-    constructor(name, email, id, role, office, github, school){
-        this.name = name;
-        this.email = email;
-        this.id = id;
-        this.role = role;
-        this.office = office;
-        this.github = github;
-        this.school = school;
-        this.icon;
-        return this;
-    }
-    assignIcon(){
-        if (this.role === 'Manager'){
-            this.icon = `<span><i class="fas fa-mug-hot"></i></span>`
-        } else if (this.role === 'Engineer'){
-            this.icon = `<i class="fas fa-glasses"></i>`
-        } else {
-            this.icon = `<i class="fas fa-user-graduate"></i>`
-        }
-        return this;
-    }
-}
+let e;
+const employeesArray = [];
 
 const greeting = 
 `
@@ -53,24 +34,33 @@ const goodbye =
 ${emoji.get('white_check_mark')} ${chalk.blueBright('Success! The HTML for your team was successfully written. Check it out. Cheers!')} ${emoji.get('white_check_mark')}
 `;
 
+
 console.clear();
 console.log(greeting);
 
 async function getEmployees() {
     try {
         const response = await inquirer.prompt(questions);
-        let e = new Employee(response.name, response.email, response.id, response.role, response.office, response.github, response.school);
-        e.assignIcon();
+        if (response.role === "Manager"){
+            e = new Manager (response.name, response.id, response.email, response.officeNumber);
+            e.icon = `<span><i class="fas fa-mug-hot"></i></span>`;
+        } else if (response.role === "Engineer"){
+            e = new Engineer (response.name, response.id, response.email, response.github);
+            e.icon = `<span><i class="fas fa-glasses"></i></span>`
+        } else {
+            e = new Intern(response.name, response.id, response.email, response.school);
+            e.icon = e.icon = `<span><i class="fas fa-user-graduate"></i></span>`
+        };
         employeesArray.push(e);
 
         if (response.add_more){
             getEmployees();
         } else {
-            // const html = template(employeesArray);
-            // fs.writeFileSync('./index.html', html);
-            console.log('\nHere are your employees and their information\n', employeesArray)
+            const html = template();
+            const array = employeesArray.toString();
+            fs.writeFileSync('./index.html', html);
+            fs.writeFileSync('./array.js', array);
             console.log(goodbye);
-            return;
         }
 
     } catch (error) {
@@ -81,4 +71,7 @@ async function getEmployees() {
 
 getEmployees();
 
-module.exports = employeesArray;
+const newArray = JSON.stringify(employeesArray);
+
+
+module.exports = newArray;

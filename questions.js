@@ -2,26 +2,26 @@ const roles = ['Manager', 'Engineer', 'Intern'];
 
 const questions = [
     {
+        type:'list',
+        message: 'Q. What role would you like to assign this employee?',
+        choices: roles,
+        name: 'role',  
+    },{ 
         type:'input',
-        message: 'Q. What is the name of the person you want to add to the team?',
+        message: 'Q. What is their name?',
         name: 'name',
+    },{
+        type:'number',
+        message: 'Q. What is their ID number?',
+        name: 'id',
     },{
         type:'input',
         message: 'Q. What is their email address?',
         name: 'email',
-    },{
-        type:'number',
-        message: 'Q. What is the ID number assigned to them',
-        name: 'id',
-    },{
-        type:'list',
-        message: 'Q. What role do you want to assign them?',
-        choices: roles,
-        name: 'role',  
-    },{    
+    },{   
         type:'number',
         message: 'Q. What is their Office number',
-        name: 'office',
+        name: 'officeNumber',
         when: function (response){
             return response.role === "Manager";
         },
