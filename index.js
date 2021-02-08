@@ -40,7 +40,7 @@ console.log(greeting);
 async function getEmployees() {
     try {
         const response = await inquirer.prompt(questions);
-        assignIcon(response);
+        assignIconAndDesc(response);
         employeesArray.push(e);
 
         if (response.add_more){
@@ -80,7 +80,7 @@ async function getEmployees() {
 
 getEmployees();
 
-function assignIcon(response){
+function assignIconAndDesc(response){
     if (response.role === "Manager"){
         e = new Manager (response.name, response.id, response.email, response.officeNumber);
         e.icon = `<span><i class="fas fa-mug-hot"></i></span>`;
@@ -95,5 +95,3 @@ function assignIcon(response){
         e.desc = 'School: '+ e.school;
     }
 };
-
-module.exports = { employeesArray };
