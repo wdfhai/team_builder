@@ -46,7 +46,6 @@ async function getEmployees() {
         if (response.add_more){
             getEmployees();
         } else {
-            console.log(employeesArray);
             const cards = employeesArray.map(e=>`
                 <div class='card' id='memberCard'>
                     <div class='card-header'>
@@ -66,7 +65,6 @@ async function getEmployees() {
                     </div>
                 </div>
                 `);
-            console.log(cards);
             const html = template(cards)
             fs.writeFileSync('./index.html', html);
             console.log(goodbye);

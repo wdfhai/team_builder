@@ -27,6 +27,7 @@ h1 {
   margin: 20px;
   width: 250px;
   height: auto;
+  background-color: #dddada;
   border-radius: 10px;
   -moz-border-radius: 10px;
   -webkit-border-radius: 10px;
