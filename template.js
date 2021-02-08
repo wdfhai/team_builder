@@ -24,7 +24,7 @@ const html = (cards) =>
     </header>
 
     <section class="container" id="main">
-        <div class="row">
+        <div class="row justify-content-center">
             ${(cards)}
 
         </div>
