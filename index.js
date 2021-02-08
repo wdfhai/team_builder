@@ -4,18 +4,17 @@ const chalk = require ('chalk');
 const emoji = require ('node-emoji');
 const questions = require ('./questions');
 const template = require ('./template');
-const Employee = require ('./lib/Employee');
 const Manager = require ('./lib/Manager');
 const Engineer = require ('./lib/Engineer');
 const Intern = require ('./lib/Intern');
 
 let e;
-const employeesArray = [];
+let employeesArray = [];
 
 const greeting = 
 `
 
-                ${emoji.get('male-technologist')}  ${chalk.bgMagenta('Welcome to the Dev Team Builder!')}  ${(emoji.get('female-technologist'))}  
+                ${emoji.get('male-technologist')}  ${chalk.bgMagenta('Welcome to the Team Builder!')}  ${(emoji.get('female-technologist'))}  
 
 ${chalk.cyan('This application will generate a HTML file presenting your team and its members along with their roles and details.')}
 
@@ -41,25 +40,35 @@ console.log(greeting);
 async function getEmployees() {
     try {
         const response = await inquirer.prompt(questions);
-        if (response.role === "Manager"){
-            e = new Manager (response.name, response.id, response.email, response.officeNumber);
-            e.icon = `<span><i class="fas fa-mug-hot"></i></span>`;
-        } else if (response.role === "Engineer"){
-            e = new Engineer (response.name, response.id, response.email, response.github);
-            e.icon = `<span><i class="fas fa-glasses"></i></span>`
-        } else {
-            e = new Intern(response.name, response.id, response.email, response.school);
-            e.icon = e.icon = `<span><i class="fas fa-user-graduate"></i></span>`
-        };
+        assignIcon(response);
         employeesArray.push(e);
 
         if (response.add_more){
             getEmployees();
         } else {
-            const html = template();
-            const array = employeesArray.toString();
+            console.log(employeesArray);
+            const cards = employeesArray.map(e=>`
+                <div class='card' id='memberCard'>
+                    <div class='card-header'>
+                        <p id='name'>${e.name}</p>
+                        <p id='role'>${e.icon} ${e.role}</p>
+                    </div>
+                    <div class='card-body'>
+                        <div class='info'>
+                            <p>ID: ${e.id}</p>
+                        </div>
+                        <div class='info'>
+                            <p>Email: ${e.email}</p>
+                        </div>
+                        <div class='info'>
+                            <p>${e.desc}</p>
+                        </div> 
+                    </div>
+                </div>
+                `);
+            console.log(cards);
+            const html = template(cards)
             fs.writeFileSync('./index.html', html);
-            fs.writeFileSync('./array.js', array);
             console.log(goodbye);
         }
 
@@ -71,7 +80,20 @@ async function getEmployees() {
 
 getEmployees();
 
-const newArray = JSON.stringify(employeesArray);
+function assignIcon(response){
+    if (response.role === "Manager"){
+        e = new Manager (response.name, response.id, response.email, response.officeNumber);
+        e.icon = `<span><i class="fas fa-mug-hot"></i></span>`;
+        e.desc = 'Office Number: '+ e.officeNumber;
+    } else if (response.role === "Engineer"){
+        e = new Engineer (response.name, response.id, response.email, response.github);
+        e.icon = `<span><i class="fas fa-glasses"></i></span>`
+        e.desc = 'GitHub: '+ e.github;
+    } else {
+        e = new Intern(response.name, response.id, response.email, response.school);
+        e.icon =`<span><i class="fas fa-user-graduate"></i></span>`;
+        e.desc = 'School: '+ e.school;
+    }
+};
 
-
-module.exports = newArray;
+module.exports = { employeesArray };

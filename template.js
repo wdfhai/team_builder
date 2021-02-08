@@ -1,5 +1,6 @@
 
-const html = (employeesArray) =>
+const html = (cards) =>
+
 `
 <!DOCTYPE html>
 <html lang="en">
@@ -23,7 +24,8 @@ const html = (employeesArray) =>
     </header>
 
     <section class="container" id="main">
-        <div class="row" id="employeesRow">
+        <div class="row">
+            ${(cards)}
 
         </div>
     </section>
@@ -34,7 +36,7 @@ const html = (employeesArray) =>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"
         integrity="sha512-XKa9Hemdy1Ui3KSGgJdgMyYlUg1gM+QhL6cnlyTe2qzMCYm4nAZ1PsVerQzTTXzonUR+dmswHqgJPuwCq1MaAg=="
         crossorigin="anonymous"></script>
-    <script src="./develop/script.js"></script>
+    <script></script>
 </body>
 
 </html>

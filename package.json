@@ -4,14 +4,14 @@
   "description": "A NodeJS based application designed to build a Team in HTML",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest" 
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/wdfhai/dream_team_builder.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "wdfhai",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/wdfhai/dream_team_builder/issues"
@@ -26,8 +26,5 @@
   },
   "directories": {
     "test": "test"
-  },
-  "scripts" : { 
-    "test" : "jest" 
   }
 }
