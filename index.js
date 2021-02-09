@@ -64,7 +64,7 @@ async function getEmployees() {
                         </div> 
                     </div>
                 </div>
-                `);
+                `).join('');
             const html = template(cards)
             fs.writeFileSync('./index.html', html);
             console.log(goodbye);
