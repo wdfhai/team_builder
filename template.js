@@ -1,5 +1,5 @@
 
-const html = (cards) =>
+const html = (managerCards, engineerCards, internCards) =>
 
 `
 <!DOCTYPE html>
@@ -25,7 +25,9 @@ const html = (cards) =>
 
     <section class="container" id="main">
         <div class="row justify-content-center">
-            ${(cards)}
+            ${(managerCards)}\n
+            ${(engineerCards)}\n
+            ${(internCards)}
 
         </div>
     </section>

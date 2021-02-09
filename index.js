@@ -9,7 +9,9 @@ const Engineer = require ('./lib/Engineer');
 const Intern = require ('./lib/Intern');
 
 let e;
-let employeesArray = [];
+let managerArray = [];
+let engineerArray = [];
+let internArray = [];
 
 const greeting = 
 `
@@ -40,13 +42,12 @@ console.log(greeting);
 async function getEmployees() {
     try {
         const response = await inquirer.prompt(questions);
-        assignIconAndDesc(response);
-        employeesArray.push(e);
+        assignIconOrderAndDesc(response);
 
         if (response.add_more){
             getEmployees();
         } else {
-            const cards = employeesArray.map(e=>`
+            const managerCards = managerArray.map(e=>`
                 <div class='card' id='memberCard'>
                     <div class='card-header'>
                         <p id='name'>${e.name}</p>
@@ -64,8 +65,46 @@ async function getEmployees() {
                         </div> 
                     </div>
                 </div>
-                `).join('');
-            const html = template(cards)
+            `).join('');
+            const engineerCards = engineerArray.map(e=>`
+                <div class='card' id='memberCard'>
+                    <div class='card-header'>
+                        <p id='name'>${e.name}</p>
+                        <p id='role'>${e.icon} ${e.role}</p>
+                    </div>
+                    <div class='card-body'>
+                        <div class='info'>
+                            <p>ID: ${e.id}</p>
+                        </div>
+                        <div class='info'>
+                            <p>Email: ${e.email}</p>
+                        </div>
+                        <div class='info'>
+                            <p>${e.desc}</p>
+                        </div> 
+                    </div>
+                </div>
+            `).join('');
+            const internCards = internArray.map(e=>`
+                <div class='card' id='memberCard'>
+                    <div class='card-header'>
+                        <p id='name'>${e.name}</p>
+                        <p id='role'>${e.icon} ${e.role}</p>
+                    </div>
+                    <div class='card-body'>
+                        <div class='info'>
+                            <p>ID: ${e.id}</p>
+                        </div>
+                        <div class='info'>
+                            <p>Email: ${e.email}</p>
+                        </div>
+                        <div class='info'>
+                            <p>${e.desc}</p>
+                        </div> 
+                    </div>
+                </div>
+            `).join('');
+            const html = template(managerCards, engineerCards, internCards);
             fs.writeFileSync('./index.html', html);
             console.log(goodbye);
         }
@@ -78,18 +117,21 @@ async function getEmployees() {
 
 getEmployees();
 
-function assignIconAndDesc(response){
+function assignIconOrderAndDesc(response){
     if (response.role === "Manager"){
         e = new Manager (response.name, response.id, response.email, response.officeNumber);
         e.icon = `<span><i class="fas fa-mug-hot"></i></span>`;
         e.desc = 'Office Number: '+ e.officeNumber;
+        managerArray.push(e);
     } else if (response.role === "Engineer"){
         e = new Engineer (response.name, response.id, response.email, response.github);
         e.icon = `<span><i class="fas fa-glasses"></i></span>`
         e.desc = 'GitHub: '+ e.github;
+        engineerArray.push(e);
     } else {
         e = new Intern(response.name, response.id, response.email, response.school);
         e.icon =`<span><i class="fas fa-user-graduate"></i></span>`;
         e.desc = 'School: '+ e.school;
+        internArray.push(e);
     }
 };
